@@ -34,11 +34,15 @@ object Calibrate {
 
   def find(data: String): Long = ("" + findFirst(data) + findLast(data)).toLong
 
+  def findAny(data: String): Long = ("" + findFirstAnyNumber(data).getOrElse(0) + findLastAnyNumber(data).getOrElse(0)).toLong
+
   def add(source: Iterator[String]): Long = {
     source.map(s => find(s)).sum
   }
 
-
+  def addAny(source: Iterator[String]): Long = {
+    source.map(s => findAny(s)).sum
+  }
   def findFirstAnyNumber(data: String): Option[Int] = {
     foldWhile[Char, (Collectable[Char, Int], Option[Int])](
       data.toCharArray,

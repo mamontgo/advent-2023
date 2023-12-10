@@ -89,7 +89,7 @@ class SeedMapTest extends AnyFunSuite {
 
   test("test full seed pairs lowest solution concurrent") {
     val seeds: Seeds = SeedMap.processLines(Source.fromFile("./src/main/resources/day5/test.txt").getLines().toSeq)
-    println(s"Res ${seeds.lowestRangesConcurrent()}")
+//    println(s"Res ${seeds.lowestRangesConcurrent()}")
     //84206669
   }
 
@@ -99,8 +99,5 @@ class SeedMapTest extends AnyFunSuite {
     val r = (s to e by 4)
     r.foreach(x => println(s"val $x"))
 
-    r.foldLeft(Seq[(Long, Long)]()) {
-      (i, v)
-    }
   }
 }

@@ -1,5 +1,7 @@
 package mamontgo.advent.day1
 
+import mamontgo.advent.util.Ftils
+
 import scala.annotation.tailrec
 
 object Calibrate {
@@ -44,7 +46,7 @@ object Calibrate {
     source.map(s => findAny(s)).sum
   }
   def findFirstAnyNumber(data: String): Option[Int] = {
-    foldWhile[Char, (Collectable[Char, Int], Option[Int])](
+    Ftils.foldWhile[Char, (Collectable[Char, Int], Option[Int])](
       data.toCharArray,
       init,
       collectionCompleteTest,
@@ -53,7 +55,7 @@ object Calibrate {
   }
 
   def findLastAnyNumber(data: String): Option[Int] = {
-    foldWhile[Char, (Collectable[Char, Int], Option[Int])](
+    Ftils.foldWhile[Char, (Collectable[Char, Int], Option[Int])](
       data.reverse.toCharArray,
       initReverse,
       collectionCompleteTest,
@@ -62,16 +64,7 @@ object Calibrate {
   }
 
 
-  @tailrec
-  private def foldWhile[T, K](x: Seq[T], init: K, test: K => Boolean, f:(K, T) => K): K = {
-    x match {
-      case h +: tail =>
-        val y = f(init, h)
-        if (test(y)) y
-        else foldWhile(tail, y, test, f)
-      case _ => init
-    }
-  }
+
 
 
 }

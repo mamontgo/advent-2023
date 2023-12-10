@@ -4,7 +4,7 @@ import org.scalatest.funsuite.AnyFunSuite
 
 import scala.io.Source
 
-class Day4Tests  extends AnyFunSuite {
+class Day4Tests extends AnyFunSuite {
 
   test("input test") {
     val c = Card.fromString("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53")
@@ -30,7 +30,6 @@ class Day4Tests  extends AnyFunSuite {
 
 
   test("input card scores test") {
-
     val source = Source.fromFile("./src/main/resources/day4/test.txt")
     val cards = source.getLines().map(l => Card.fromString(l)).toList
 

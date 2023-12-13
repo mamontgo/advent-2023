@@ -4,12 +4,12 @@ import scala.annotation.tailrec
 
 object Ftils {
   @tailrec
-  def foldWhile[T, K](x: Seq[T], init: K, test: K => Boolean, f: (K, T) => K): K = {
+  def foldUntil[T, K](x: Seq[T], init: K, test: K => Boolean, f: (K, T) => K): K = {
     x match {
       case h +: tail =>
         val y = f(init, h)
         if (test(y)) y
-        else foldWhile(tail, y, test, f)
+        else foldUntil(tail, y, test, f)
       case _ => init
     }
   }

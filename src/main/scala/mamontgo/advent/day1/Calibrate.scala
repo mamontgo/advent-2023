@@ -46,7 +46,7 @@ object Calibrate {
     source.map(s => findAny(s)).sum
   }
   def findFirstAnyNumber(data: String): Option[Int] = {
-    Ftils.foldWhile[Char, (Collectable[Char, Int], Option[Int])](
+    Ftils.foldUntil[Char, (Collectable[Char, Int], Option[Int])](
       data.toCharArray,
       init,
       collectionCompleteTest,
@@ -55,7 +55,7 @@ object Calibrate {
   }
 
   def findLastAnyNumber(data: String): Option[Int] = {
-    Ftils.foldWhile[Char, (Collectable[Char, Int], Option[Int])](
+    Ftils.foldUntil[Char, (Collectable[Char, Int], Option[Int])](
       data.reverse.toCharArray,
       initReverse,
       collectionCompleteTest,

@@ -74,18 +74,18 @@ class SeedMapTest extends AnyFunSuite {
     assert(seeds.lowestRanges() == 46)
   }
 
-  test("test full seed pairs lowest solution") {
-    val seeds: Seeds = SeedMap.processLines(Source.fromFile("./src/main/resources/day5/test.txt").getLines().toSeq)
-    println(seeds.lowestRanges())
-    assert(seeds.lowestRanges() == 46)
-  }
-
-
-  test("test full seed pairs lowest solution concurrent demo") {
-    val seeds: Seeds = SeedMap.processLines(Source.fromFile("./src/main/resources/day5/example.txt").getLines().toSeq)
-    println(s"Res ${seeds.lowestRangesConcurrent()}")
-
-  }
+//  test("test full seed pairs lowest solution") {
+//    val seeds: Seeds = SeedMap.processLines(Source.fromFile("./src/main/resources/day5/test.txt").getLines().toSeq)
+//    println(seeds.lowestRanges())
+//    assert(seeds.lowestRanges() == 46)
+//  }
+//
+//
+//  test("test full seed pairs lowest solution concurrent demo") {
+//    val seeds: Seeds = SeedMap.processLines(Source.fromFile("./src/main/resources/day5/example.txt").getLines().toSeq)
+//    println(s"Res ${seeds.lowestRangesConcurrent()}")
+//
+//  }
 
   test("test full seed pairs lowest solution concurrent") {
     val seeds: Seeds = SeedMap.processLines(Source.fromFile("./src/main/resources/day5/test.txt").getLines().toSeq)

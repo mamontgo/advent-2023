@@ -15,6 +15,14 @@ object Ftils {
   }
 
 
+  @tailrec
+  def foldUntilRes[T, K](x: Seq[T], init: K, test: T => Boolean, f: (K, T) => K): K = {
+    x match {
+      case h +: tail =>
+        if (test(h)) init else foldUntilRes(tail, f(init, h), test, f)
+      case _ => init
+    }
+  }
   def mapWhile[T, K](x: Seq[T],  test: T => Boolean, f: T => K): (Seq[K], Seq[T]) = {
     mapWhile(x, (Seq(), Seq()), test, f)
   }

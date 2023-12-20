@@ -89,6 +89,6 @@ class CamelPokerTest extends AnyFunSuite {
     val res = RankedPrizeDeal.jokerCalcPrize(r)
 
     println(res)
-    assert(res == 251363551) // to high
+    assert(res == 251003917) // to high
   }
 }

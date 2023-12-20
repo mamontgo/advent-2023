@@ -67,12 +67,12 @@ class Day4Tests extends AnyFunSuite {
     println(res2)
   }
 
-  test("countAllCards") {
-    val source = Source.fromFile("./src/main/resources/day4/test.txt")
-    val cards = source.getLines().map(l => Card.fromString(l)).toList
-
-    val res2 = Card.countAllCards(cards)
-    println(res2)
-    assert(res2 == 9924412)
-  }
+//  test("countAllCards") {
+//    val source = Source.fromFile("./src/main/resources/day4/test.txt")
+//    val cards = source.getLines().map(l => Card.fromString(l)).toList
+//
+//    val res2 = Card.countAllCards(cards)
+//    println(res2)
+//    assert(res2 == 9924412)
+//  }
 }

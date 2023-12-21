@@ -42,8 +42,7 @@ case class Seeds(seeds:Seq[Long], maps: Seq[SeedMap]) {
 case class SeedRange(rangeStart: Long, sourceRangeStart: Long, rangeLength: Long)
 case class SeedMap(name: String, ranges: Seq[SeedRange]) {
   def mapDest(in: Long): Long = {
-    Ftils.foldUntil[SeedRange,  Option[Long]](ranges, None:Option[Long],
-      t => t.isDefined,
+    Ftils.foldUntil[SeedRange, Option[Long]](ranges, None: Option[Long], t => t.isDefined) {
       (_, v) => {
         if (in >= v.sourceRangeStart && in <= v.sourceRangeStart + v.rangeLength) {
           Some(v.rangeStart + (in - v.sourceRangeStart))
@@ -51,7 +50,7 @@ case class SeedMap(name: String, ranges: Seq[SeedRange]) {
           None
         }
       }
-    ).getOrElse(in)
+    }.getOrElse(in)
   }
 }
 object SeedMap {

@@ -103,11 +103,11 @@ object Hand {
 
 
   def score(d: Deal): Int = {
-    Ftils.foldUntil[Hand, Int](hands, 0, i => i > 0, (i, h) => if (h.eval(d)) h.score else i)
+    Ftils.foldUntil[Hand, Int](hands, 0, i => i > 0) { (i, h) => if (h.eval(d)) h.score else i}
   }
 
   def scoreJoker(d: Deal): Int = {
-    Ftils.foldUntil[Hand, Int](hands, 0, i => i > 0, (i, h) => if (h.jokerEval(d)) h.score else i)
+    Ftils.foldUntil[Hand, Int](hands, 0, i => i > 0) {(i, h) => if (h.jokerEval(d)) h.score else i}
   }
 }
 

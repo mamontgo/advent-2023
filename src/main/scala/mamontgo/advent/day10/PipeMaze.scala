@@ -3,8 +3,63 @@ package mamontgo.advent.day10
 import mamontgo.advent.day10.PipeMaze.{DIR, Maze, findAdjacent, findStart}
 import mamontgo.advent.util.Ftils
 
+import scala.annotation.tailrec
+
 case class PipeMaze(m: Maze) {
   def start(): Position = findStart(m)
+}
+object PathBuilder {
+
+  def count(maze: PipeMaze): Int = {
+    // find all the paths from the start
+    val mapRes: Seq[Seq[Adjacent]] = maze.start().adjacent().map(x => find(x))
+
+
+    // calculate the longest path in loop formation
+    val max: Int = getMaxSizeOfLoopingPath(mapRes)
+
+    // get the longest looping paths
+    val res = mapRes.filter(p => p.size == max)
+
+    // reverse the last and count items in the navigation paths until the same point is reached
+    val z: Seq[(Adjacent, Adjacent)] = res.head.zip(res.last).reverse
+    Ftils.foldUntilRes[(Adjacent, Adjacent), Int](z, 1, i => i._1.position.value != PipeMaze.START && i._1.position == i._2.position) { (i, _) => i + 1
+    }
+  }
+
+
+  /**
+   * Look at all the paths.  We want 2 paths the same length, and then the longest of those paths
+   *
+   * @param res
+   * @return
+   */
+  def getMaxSizeOfLoopingPath(res: Seq[Seq[Adjacent]]): Int = {
+    Ftils.toMap[Seq[Adjacent], Int, Int](res, 0, v => v.size, _ => 1, (a, b) => a + b).filter(i => i._2 == 2).keys.toSeq.min
+  }
+
+  def find(a: Adjacent): Seq[Adjacent] = {
+    find(a, Seq(a))
+  }
+
+  /**
+   * Follow adjacent navigation path until it hits the start or a position
+   * that can no longer be navigated
+   *
+   * @param a adjacent item to navigate from
+   * @param result the current sequence of navigation followed
+   * @return the complete navigation path
+   */
+  @tailrec final def find(a: Adjacent, result: Seq[Adjacent]): Seq[Adjacent] = {
+    val nav = a.navigate()
+    if (nav.isEmpty) {
+      result
+    } else {
+      val res = Adjacent(a.m, nav.get, a.position)
+      find(res, res +: result)
+    }
+
+  }
 }
 
 object PipeMaze {
@@ -57,15 +112,15 @@ object PipeMaze {
   }
 
   def findPosition(d: Char, m: Maze): Position = {
-    Ftils.foldUntil[Vector[Char], Position](m, Position(m, -1, -1), p => p.col >= 0 && p.row >= 0 , (i, v) => {
-      val col = Ftils.foldUntil[Char, (Int, Int)](v, (-1, -1), i => i._2 >= 0, { (i, v) => {
+    Ftils.foldUntil[Vector[Char], Position](m, Position(m, -1, -1), p => p.col >= 0 && p.row >= 0) { (i, v) => {
+      val col = Ftils.foldUntil[Char, (Int, Int)](v, (-1, -1), i => i._2 >= 0) { (i, v) => {
         val init = i._1 + 1
         if (v == d) (init, init) else (init, -1)
       }
-      })._2
+      }._2
 
       if (col >= 0) Position(m, i.row + 1, col) else Position(m, i.row + 1, -1)
-    })
+    }}
   }
 
 }
@@ -75,9 +130,15 @@ case class Adjacent(m: Maze, position: Position, adjacent: Position) {
     DIR(position.row - adjacent.row + 1)(position.col - adjacent.col + 1)
   }
 
+
   def print = Position.print(position)
 
   def asString = Position.asString(position)
+
+  /**
+   * Find the next position using the navigational characters
+   * @return Option position of next step
+   */
   def navigate(): Option[Position] = {
     val dest = (dir(), position.value)
     dest match {

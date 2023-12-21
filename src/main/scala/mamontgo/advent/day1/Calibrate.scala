@@ -2,8 +2,6 @@ package mamontgo.advent.day1
 
 import mamontgo.advent.util.Ftils
 
-import scala.annotation.tailrec
-
 object Calibrate {
 
   private type StringCollectable = Collectable[Char, Int]
@@ -17,16 +15,14 @@ object Calibrate {
 
   val collectionCompleteTest: StringCollectableResult => Boolean = in => in._2.isDefined
 
-  val collect: (StringCollectableResult, Char) => StringCollectableResult =  (in, c) => {
+  val collect: (StringCollectableResult, Char) => StringCollectableResult = (in, c) => {
     if (c.isDigit) {
       (in._1, Some(c.asDigit))
-    }
-    else {
+    } else {
       val n = in._1.collect(c)
       if (n.isCollected()) {
         (n, n.getCollected())
-      }
-      else (n, in._2)
+      } else (n, in._2)
     }
   }
 
@@ -45,26 +41,18 @@ object Calibrate {
   def addAny(source: Iterator[String]): Long = {
     source.map(s => findAny(s)).sum
   }
+
   def findFirstAnyNumber(data: String): Option[Int] = {
-    Ftils.foldUntil[Char, (Collectable[Char, Int], Option[Int])](
-      data.toCharArray,
-      init,
-      collectionCompleteTest,
+    Ftils.foldUntil[Char, (Collectable[Char, Int], Option[Int])](data.toCharArray, init, collectionCompleteTest) {
       collect
-    )._2
+    }._2
   }
 
   def findLastAnyNumber(data: String): Option[Int] = {
-    Ftils.foldUntil[Char, (Collectable[Char, Int], Option[Int])](
-      data.reverse.toCharArray,
-      initReverse,
-      collectionCompleteTest,
+    Ftils.foldUntil[Char, (Collectable[Char, Int], Option[Int])](data.reverse.toCharArray, initReverse, collectionCompleteTest) {
       collect
-    )._2
+    }._2
   }
-
-
-
 
 
 }
